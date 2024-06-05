@@ -75,6 +75,11 @@ module.exports = (_, argv) => ({
           requiredVersion: deps["react-router-dom"],
           eager: true
         },
+        "@uidotdev/usehooks": {
+          singleton: true,
+          requiredVersion: deps["@uidotdev/usehooks"],
+          eager: true
+        },
       },
     }),
     new HtmlWebPackPlugin({
