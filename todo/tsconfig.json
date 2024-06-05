@@ -1,25 +1,21 @@
 {
   "compilerOptions": {
-		"esModuleInterop": true,
-    "module": "commonjs",
     "target": "es5",
-    "lib": ["es6", "dom"],
-    "sourceMap": true,
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "baseUrl": "./",
     "allowJs": true,
-    "jsx": "react",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
     "moduleResolution": "node",
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true
+    "resolveJsonModule": true,
+    "isolatedModules": false,
+    "noEmit": false,
+    "jsx": "react-jsx"
   },
-  "exclude": [
-    "node_modules",
-    "postcss.config.js",
-    "tailwind.config.js",
-    "webpack.config.js"
-  ],
-  "types": [
-    "typePatches"
-  ]
+  "include": ["src"]
 }

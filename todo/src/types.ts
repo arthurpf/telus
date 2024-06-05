@@ -3,3 +3,9 @@ export interface ITodoItem {
 	description: string,
 	completed: boolean
 }
+
+export enum TodoStatus{
+	ALL,
+	ACTIVE,
+	COMPLETED
+}

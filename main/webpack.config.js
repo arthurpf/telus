@@ -1,5 +1,6 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
+const ExternalTemplateRemotesPlugin = require("external-remotes-plugin");
 const path = require('path');
 
 const deps = require("./package.json").dependencies;
@@ -11,13 +12,10 @@ module.exports = (_, argv) => ({
   },
   resolve: {
     extensions: [".tsx", ".ts", ".jsx", ".js", ".json"],
-    alias: {
-      '@': './src'
-    }
   },
   devServer: {
     static: path.join(__dirname, 'dist'),
-    port: 9001,
+    port: 9000,
   },
   module: {
     rules: [
@@ -53,26 +51,30 @@ module.exports = (_, argv) => ({
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: "todo",
-      filename: "todo-app.js",
-      exposes: {
-        './App': './src/components/todo.tsx',
+      name: "main",
+      filename: "main-app.js",
+      remotes: {
+        todo: "todo@http://localhost:9001/todo-app.js",
       },
       shared: {
         react: {
           singleton: true,
           requiredVersion: deps.react,
+          eager: true,
         },
         "react-dom": {
           singleton: true,
           requiredVersion: deps["react-dom"],
+          eager: true,
         },
-        "@uidotdev/usehooks": {
+        "react-router-dom": {
           singleton: true,
-          requiredVersion: deps["@uidotdev/usehooks"],
+          requiredVersion: deps["react-router-dom"],
+          eager: true,
         },
       },
     }),
+    new ExternalTemplateRemotesPlugin(),
     new HtmlWebPackPlugin({
       template: "./src/index.html",
     }),

@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useId, ChangeEvent, FormEvent } from 'react'
+import React, { useState, useEffect, useMemo , ChangeEvent, FormEvent } from 'react'
 import { useLocalStorage } from "@uidotdev/usehooks";
-import { ITodoItem } from '../types';
+import { ITodoItem, TodoStatus } from './../types';
+import Filter from './filter';
 
 export default function Todo() {
 	const [storageList, setStorageList] = useLocalStorage<ITodoItem[]>('todo-app.list', []);
 	const [list, setList] = useState<ITodoItem[]>(storageList);
 	const [newTodoDescription, setNewTodoDescription] = useState<string>('');
-
-	// todo FILTERED LIST
+	const [filterType, setFilterType] = useState<TodoStatus>(TodoStatus.ALL);
 
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setNewTodoDescription(e.target.value);
@@ -28,13 +28,37 @@ export default function Todo() {
 		e.preventDefault();
     if (newTodoDescription.trim()) {
       const newList: ITodoItem = {
-        id: (list.length + 1).toString(),
+        id: crypto.randomUUID(),
         description: newTodoDescription,
         completed: false
       };
       setList([...list, newList]);
       setNewTodoDescription(''); // Clear the input field after adding
     }
+  };
+
+	const visibleTodos = useMemo(
+    () => {
+			switch (filterType) {
+				case TodoStatus.ALL:
+					return list
+				case TodoStatus.ACTIVE:
+					return list.filter(item => !item.completed)
+				case TodoStatus.COMPLETED:
+					return list.filter(item => item.completed)
+				default:
+					return list
+			}
+		},
+    [filterType, list]
+  );
+
+	const filter = (type: TodoStatus) => {
+		setFilterType(type);
+	}
+
+	const deleteItem = (id: string) => {
+		setList(list.filter(item => item.id !== id));
   };
 
 	return (
@@ -50,13 +74,18 @@ export default function Todo() {
 				<button className='mt-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg w-full text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800' onClick={(e) => add(e)}>Add Item</button>
 			</form>
 			
+			<Filter onChange={filter} />
+
 			<ul className='w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white'>
-				{list.map((item, index) => (
-					<li className='flex gap-2 w-full px-4 py-2 border-b border-gray-200 rounded-t-lg dark:border-gray-600' key={index}>
-						<span>
+				{visibleTodos.map((item, index) => (
+					<li className='flex justify-between gap-2 w-full px-4 py-2 border-b border-gray-200 rounded-t-lg dark:border-gray-600' key={index}>
+						<span className='self-center'>
 							{item.description}
 						</span>
-						<input type="checkbox" checked={item.completed} onChange={e => onChangeItemState(e.target.checked, item.id)} />
+						<span className='actions flex self-start'>
+							<input type="checkbox" checked={item.completed} onChange={e => onChangeItemState(e.target.checked, item.id)} />
+							<span role="button" tabIndex={0} onClick={() => deleteItem(item.id)} className='ml-5 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 text-center'>&#215;</span>
+						</span>
 					</li>
 				))}
 			</ul>
