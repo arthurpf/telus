@@ -6,7 +6,9 @@
     "build:start": "cd dist && PORT=9001 npx serve",
     "start:live": "webpack serve --open --mode development --live-reload --hot",
     "start": "webpack serve",
-    "build": "webpack --mode production"
+    "install": "npm i",
+    "build": "webpack --mode production",
+    "test": "jest"
   },
   "author": {
     "name": "Arthur Franco",
@@ -20,9 +22,12 @@
     "@babel/preset-typescript": "^7.24.6",
     "@testing-library/dom": "^10.1.0",
     "@testing-library/react": "^16.0.0",
+    "@types/jest": "^29.5.12",
+    "@types/mocha": "^10.0.6",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "autoprefixer": "^10.1.0",
+    "babel-jest": "^29.7.0",
     "babel-loader": "^8.2.2",
     "css-loader": "^6.3.0",
     "html-webpack-plugin": "^5.3.2",
@@ -32,6 +37,7 @@
     "postcss-loader": "^4.1.0",
     "style-loader": "^3.3.0",
     "tailwindcss": "^2.0.2",
+    "ts-jest": "^29.1.4",
     "ts-loader": "^9.5.1",
     "typescript": "^5.4.5",
     "webpack": "^5.57.1",

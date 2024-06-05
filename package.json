@@ -1,5 +1,5 @@
 {
-  "name": "MFE",
+  "name": "mfe",
   "private": true,
   "workspaces": {
     "packages": [
@@ -9,6 +9,7 @@
   },
   "scripts": {
     "start": "lerna run --parallel start",
+    "install": "lerna run install",
     "build": "lerna run build"
   },
   "devDependencies": {

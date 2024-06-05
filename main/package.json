@@ -6,6 +6,7 @@
     "build:start": "cd dist && PORT=9001 npx serve",
     "start:live": "webpack serve --open --mode development --live-reload --hot",
     "start": "webpack serve",
+    "install": "npm i",
     "build": "webpack --mode production"
   },
   "author": {

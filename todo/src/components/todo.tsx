@@ -83,8 +83,8 @@ export default function Todo() {
 							{item.description}
 						</span>
 						<span className='actions flex self-start'>
-							<input type="checkbox" checked={item.completed} onChange={e => onChangeItemState(e.target.checked, item.id)} />
-							<span role="button" tabIndex={0} onClick={() => deleteItem(item.id)} className='ml-5 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 text-center'>&#215;</span>
+							<input type="checkbox" data-testid={`checkbox-${index}`} checked={item.completed} onChange={e => onChangeItemState(e.target.checked, item.id)} />
+							<span role="button"data-testid={`delete-btn-${index}`} tabIndex={0} onClick={() => deleteItem(item.id)} className='ml-5 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 text-center'>&#215;</span>
 						</span>
 					</li>
 				))}

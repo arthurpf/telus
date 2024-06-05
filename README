@@ -1,1 +1,12 @@
-Micro Front End
+# Micro Front End
+
+## Setup
+Go to your root project folder in the terminal and do in this order:
+- `npm i`
+- `npm run install`
+- `npm run build`
+
+You will access using `http://localhost:9000`
+
+## Tests
+You have a test case for Todo component. You can run it by go into `/todo` folder and running `npm run test`
